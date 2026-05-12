@@ -54,7 +54,7 @@ public class GazeInteractor : MonoBehaviour
         if (gazeTimer >= gazeCompleteTime)
         {
             currentTarget.OnGazeComplete();
-            gazeTimer = 0f;
+            ClearTarget();
         }
     }
 

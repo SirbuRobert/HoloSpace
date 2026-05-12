@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: HoloKit::HoloKit.UI.HoloKitDefaultUICanvas
   RenderModeButtonText: {fileID: 1532483770}
-  RecordButtonText: {fileID: 299273505}
+  RecordButtonText: {fileID: 0}
 --- !u!114 &1936047800
 MonoBehaviour:
   m_ObjectHideFlags: 0

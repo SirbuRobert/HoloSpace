@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 859912415057347557}
   - component: {fileID: 2056185145955408948}
   - component: {fileID: 8262364325182348040}
-  m_Layer: 0
+  - component: {fileID: 7141595902087650806}
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,6 +113,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7141595902087650806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126747233567782870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c9337fe83e74aaf9f92714a8d09466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectablePart
+  displayName: Marte
+  description: "Marte este a patra planet\u0103 de la Soare \u0219i penultima ca
+    m\u0103rime din Sistemul Solar."
+  hoverScaleMultiplier: 1.05
+  selectedScaleMultiplier: 1.1
+  scaleLerpSpeed: 10
 --- !u!1 &7620482081227068233
 GameObject:
   m_ObjectHideFlags: 0

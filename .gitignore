@@ -105,3 +105,17 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ─────────────────────────────────────────────────────────
+# HoloSpace — local secrets, never commit
+# ─────────────────────────────────────────────────────────
+# OpenAI API key (ScriptableObject containing the key in plaintext).
+# Each developer generates this locally via Project > Create > HoloSpace > OpenAI Secrets.
+/[Aa]ssets/[Ss]ettings/OpenAISecrets.asset
+/[Aa]ssets/[Ss]ettings/OpenAISecrets.asset.meta
+
+# ─────────────────────────────────────────────────────────
+# macOS / OS-specific cruft
+# ─────────────────────────────────────────────────────────
+.DS_Store
+**/.DS_Store

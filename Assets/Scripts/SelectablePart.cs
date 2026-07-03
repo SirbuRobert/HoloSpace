@@ -2,27 +2,26 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Marks a child object of the placed model (e.g. a planet) as gaze-selectable.
-/// Plugs into the existing GazeInteractor via IGazeTarget.
+/// Marcheaza un obiect copil al modelului plasat (ex. o planeta) ca gaze-selectabil.
+/// Se leaga de GazeInteractor prin IGazeTarget.
 ///
-/// Visual feedback uses a subtle scale tween on this transform's localScale,
-/// which composes multiplicatively with ModelController's parent-level scaling
-/// (so ScaleUp / ScaleDown on the whole model keep working without conflict).
+/// Feedback-ul vizual e un scale tween subtil pe localScale-ul acestui transform,
+/// care se compune multiplicativ cu scalarea de la nivelul parintelui din
+/// ModelController (asa ScaleUp / ScaleDown pe tot modelul raman fara conflict).
 ///
-/// Selection itself is delegated to SelectionManager via a static event,
-/// so this script compiles and runs on its own — SelectionManager subscribes
-/// in step 2 of the milestone.
+/// Selectia propriu-zisa e delegata catre SelectionManager printr-un eveniment
+/// static, deci scriptul functioneaza si de unul singur.
 /// </summary>
 [DisallowMultipleComponent]
 public class SelectablePart : MonoBehaviour, IGazeTarget
 {
-    // --- Static event ---------------------------------------------------------
-    // SelectionManager subscribes to this and decides what "selected" means
-    // (single vs multi). SelectablePart itself stays single-responsibility:
-    // detect gaze, animate, report.
+    // --- Eveniment static -----------------------------------------------------
+    // SelectionManager asculta asta si decide ce inseamna "selectat"
+    // (single vs multi). SelectablePart ramane cu o singura responsabilitate:
+    // detecteaza gaze, animeaza, raporteaza.
     public static event Action<SelectablePart> GazeCompleted;
 
-    // --- Inspector fields -----------------------------------------------------
+    // --- Campuri Inspector ----------------------------------------------------
     [Header("Identity")]
     [Tooltip("Pretty name shown on the MR panel (e.g. \"Mars\"). " +
              "Independent of GameObject.name so meshes can be called anything.")]
@@ -42,14 +41,23 @@ public class SelectablePart : MonoBehaviour, IGazeTarget
     [Tooltip("How quickly the scale tween reaches its target. Higher = snappier.")]
     [SerializeField, Range(1f, 30f)] private float scaleLerpSpeed = 10f;
 
-    // --- Public API -----------------------------------------------------------
+    // --- API public -----------------------------------------------------------
     public string DisplayName => displayName;
     public string Description => description;
     public bool IsSelected { get; private set; }
 
     /// <summary>
-    /// Called by SelectionManager to mark this part as the selected one
-    /// (or to clear its selection state when another part wins).
+    /// Seteaza numele si descrierea la runtime (folosit de SolarSystemBuilder).
+    /// </summary>
+    public void Initialize(string name, string desc)
+    {
+        displayName = name;
+        description = desc;
+    }
+
+    /// <summary>
+    /// Apelat de SelectionManager ca sa marcheze aceasta parte ca fiind cea
+    /// selectata (sau ca sa ii curete starea cand alta parte castiga selectia).
     /// </summary>
     public void SetSelected(bool selected)
     {
@@ -57,10 +65,9 @@ public class SelectablePart : MonoBehaviour, IGazeTarget
         RefreshTargetScale(isHovered: false);
     }
 
-    // --- Internal state -------------------------------------------------------
+    // --- Stare interna --------------------------------------------------------
     private Vector3 baseLocalScale;
     private Vector3 targetLocalScale;
-    private bool isHovered;
 
     // --- Unity lifecycle ------------------------------------------------------
     private void Awake()
@@ -71,9 +78,8 @@ public class SelectablePart : MonoBehaviour, IGazeTarget
 
     private void OnDisable()
     {
-        // Make sure we don't leave the GazeInteractor thinking we're still hovered
-        // if this part gets disabled mid-gaze (e.g. user resets the model).
-        isHovered = false;
+        // Ne asiguram ca nu lasam GazeInteractor sa creada ca inca suntem in hover
+        // daca partea e dezactivata in mijlocul gaze-ului (ex. user reseteaza modelul).
         targetLocalScale = IsSelected
             ? baseLocalScale * selectedScaleMultiplier
             : baseLocalScale;
@@ -82,7 +88,7 @@ public class SelectablePart : MonoBehaviour, IGazeTarget
 
     private void Update()
     {
-        // Cheap early-out so we don't burn CPU on parts that aren't animating.
+        // Iesire rapida ca sa nu consumam CPU pe parti care nu se animeaza.
         if ((transform.localScale - targetLocalScale).sqrMagnitude < 0.000001f)
             return;
 
@@ -96,33 +102,31 @@ public class SelectablePart : MonoBehaviour, IGazeTarget
     // --- IGazeTarget ----------------------------------------------------------
     public void OnGazeEnter()
     {
-        isHovered = true;
         RefreshTargetScale(isHovered: true);
     }
 
     public void OnGazeStay(float progress)
     {
-        // Reserved for future use — e.g. radial fill on the MR panel reticle.
-        // Intentionally empty: GazeInteractor already handles the dwell timer.
+        // Rezervat pentru mai tarziu, ex. radial fill pe reticulul panoului MR.
+        // Lasat gol intentionat: GazeInteractor se ocupa deja de timerul de dwell.
     }
 
     public void OnGazeExit()
     {
-        isHovered = false;
         RefreshTargetScale(isHovered: false);
     }
 
     public void OnGazeComplete()
     {
-        // Don't decide selection here — let SelectionManager arbitrate.
-        // It's the single source of truth for "which part is selected".
+        // Nu decidem selectia aici, lasam SelectionManager sa arbitreze.
+        // El e singura sursa de adevar pentru "ce parte e selectata".
         GazeCompleted?.Invoke(this);
     }
 
     // --- Helpers --------------------------------------------------------------
     private void RefreshTargetScale(bool isHovered)
     {
-        // Selection beats hover (a selected part stays grown even after gaze leaves).
+        // Selectia bate hover-ul (o parte selectata ramane marita si dupa ce gaze-ul pleaca).
         float multiplier = IsSelected
             ? selectedScaleMultiplier
             : (isHovered ? hoverScaleMultiplier : 1f);

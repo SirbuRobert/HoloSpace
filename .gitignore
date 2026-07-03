@@ -119,3 +119,6 @@ InitTestScene*.unity*
 # ─────────────────────────────────────────────────────────
 .DS_Store
 **/.DS_Store
+/paper
+/Licenta
+/Proxy

@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Single-selection arbiter pentru SelectablePart-uri.
-/// Ascultă SelectablePart.GazeCompleted, deselectează partea curentă,
-/// selectează cea nouă, și anunță UI-ul prin SelectionChanged.
-/// Convenție: o singură instanță în scenă (un GameObject gol "SelectionManager").
+/// Arbitru de selectie unica pentru SelectablePart-uri.
+/// Asculta SelectablePart.GazeCompleted, deselecteaza partea curenta,
+/// o selecteaza pe cea noua si anunta UI-ul prin SelectionChanged.
+/// Conventie: o singura instanta in scena (un GameObject gol "SelectionManager").
 /// </summary>
 [DisallowMultipleComponent]
 public class SelectionManager : MonoBehaviour
@@ -13,12 +13,12 @@ public class SelectionManager : MonoBehaviour
     public static SelectionManager Instance { get; private set; }
 
     /// <summary>
-    /// Emis de fiecare dată când selecția se schimbă.
-    /// Argumentul e noul SelectablePart sau null când selecția e curățată.
+    /// Emis de fiecare data cand selectia se schimba.
+    /// Argumentul e noul SelectablePart sau null cand selectia e curatata.
     /// </summary>
     public static event Action<SelectablePart> SelectionChanged;
 
-    /// <summary>Partea selectată curent, sau null dacă nu există selecție.</summary>
+    /// <summary>Partea selectata curent, sau null daca nu exista selectie.</summary>
     public SelectablePart CurrentSelection { get; private set; }
 
     [Header("Behaviour")]
@@ -72,8 +72,8 @@ public class SelectionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// API public — poate fi apelat și din alt cod (ex. test, hotkey).
-    /// Deselectează partea curentă (dacă e cazul) și selectează noua.
+    /// API public, poate fi apelat si din alt cod (ex. test, hotkey).
+    /// Deselecteaza partea curenta (daca e cazul) si o selecteaza pe cea noua.
     /// </summary>
     public void SelectPart(SelectablePart part)
     {
@@ -90,7 +90,7 @@ public class SelectionManager : MonoBehaviour
         SelectionChanged?.Invoke(CurrentSelection);
     }
 
-    /// <summary>Curăță selecția curentă (dacă există) și anunță UI-ul.</summary>
+    /// <summary>Curata selectia curenta (daca exista) si anunta UI-ul.</summary>
     public void ClearSelection()
     {
         if (CurrentSelection == null) return;

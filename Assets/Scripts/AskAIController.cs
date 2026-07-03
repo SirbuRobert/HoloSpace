@@ -29,10 +29,10 @@ public class AskAIController : MonoBehaviour
         string question = string.Format(questionTemplate, current.DisplayName);
         Debug.Log($"[AskAIController] Întrebare: \"{question}\"", this);
 
-        // Loading state imediat — utilizatorul vede că se întâmplă ceva
+        // Loading state imediat, ca utilizatorul sa vada ca se intampla ceva
         if (panel != null) panel.ShowDescription(loadingMessage);
 
-        // Fallback dacă serviciul nu e cablat încă (pre-API key)
+        // Fallback daca serviciul nu e cablat inca (pre-API key)
         if (aiService == null)
         {
             Debug.LogWarning("[AskAIController] aiService nu e setat — folosesc placeholder.", this);
@@ -41,7 +41,7 @@ public class AskAIController : MonoBehaviour
             return;
         }
 
-        // Capturez datele acum — dacă selecția se schimbă mid-request, le păstrez
+        // Capturez datele acum: daca selectia se schimba mid-request, le pastrez
         string partName = current.DisplayName;
         string partDescription = current.Description;
 

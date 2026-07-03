@@ -119,6 +119,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1764485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764487}
+  - component: {fileID: 1764486}
+  m_Layer: 0
+  m_Name: LibraryButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1764486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419e4e1d0c42c49eeb3704f254223dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LibraryButton
+  libraryUI: {fileID: 178448712}
+  distance: 0.8
+  horizontalOffset: 0.25
+  verticalOffset: -0.2
+  buttonText: "\U0001F4DA Library"
+  normalColor: {r: 1, g: 1, b: 1, a: 0.85}
+  hoverColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  completeColor: {r: 0.4, g: 1, b: 0.6, a: 1}
+--- !u!4 &1764487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764485}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.06492, y: -0, z: 0.17275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9082690
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ARPlacementManager
   raycastManager: {fileID: 999850274}
   planeManager: {fileID: 999850273}
-  objectToPlacePrefab: {fileID: 7620482081227068233, guid: b79fb65135d9a455eac21a1a6a5a5282, type: 3}
+  objectToPlacePrefab: {fileID: 514512064329630844, guid: f26ebc73434a5401d938965044b96d1c, type: 3}
   placementReticle: {fileID: 1940474511}
   gazeTimeToPlace: 1.5
 --- !u!4 &9082692
@@ -677,6 +729,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123157758}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &178448711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 178448713}
+  - component: {fileID: 178448712}
+  m_Layer: 0
+  m_Name: ModelLibraryUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &178448712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178448711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092d3688d2b81448fa750afa4b0cc3fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ModelLibraryUI
+  glbLoader: {fileID: 1818702040}
+  arCamera: {fileID: 0}
+  secrets: {fileID: 11400000, guid: a5e1d98b4bc39489b81f2172cdbee7af, type: 2}
+  panelDistance: 1
+  panelVerticalOffset: 0
+--- !u!4 &178448713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178448711}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.06492, y: -0, z: 0.17275}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299273504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1052228208}
   - component: {fileID: 1052228207}
+  - component: {fileID: 1052228209}
   m_Layer: 0
   m_Name: AskAIController
   m_TagString: Untagged
@@ -1634,7 +1736,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052228206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9cf0ce02339d34bc59f2f53ed2c94e64, type: 3}
   m_Name: 
@@ -1658,6 +1760,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1052228209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052228206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5567679134b54a58a5e373f62f6f088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceAIController
+  panel: {fileID: 1979651500}
+  aiService: {fileID: 1613128072}
+  ttsAudioSource: {fileID: 0}
+  micPlaybackSource: {fileID: 0}
+  voiceButtonLabel: {fileID: 0}
+  maxRecordingSeconds: 8
+  sampleRate: 16000
+  maxHistoryExchanges: 8
+  baseSystemPrompt: "E\u0219ti un tutor prietenos care explic\u0103 obiecte 3D vizualizate
+    \xEEn AR. R\u0103spunzi concis, maxim 2-3 propozi\u021Bii, f\u0103r\u0103 jargon
+    excesiv. R\u0103spunde \xEEn aceea\u0219i limb\u0103 ca \xEEntrebarea."
+  ttsEnabled: 1
+  labelIdle: "Ask AI \U0001F3A4"
+  labelRecording: "\u23F9 Stop"
+  msgNoSelection: "Selecteaz\u0103 mai \xEEnt\xE2i un obiect."
+  msgNoMic: Microfonul nu e disponibil.
+  msgListening: Ascult...
+  msgProcessing: Procesez vocea...
+  msgAsking: "\xCEntreb AI..."
 --- !u!1 &1079709449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,13 +1874,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1936047799}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleRecording
-        m_Mode: 0
+      - m_Target: {fileID: 1936047804}
+        m_TargetAssemblyTypeName: VideoRecorderBootstrap, Assembly-CSharp
+        m_MethodName: SafeToggleRecording
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1821,6 +1954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GazeInteractor
   arCamera: {fileID: 685431399}
+  reticle: {fileID: 0}
   gazeDistance: 10
   gazeCompleteTime: 1.5
   interactableLayers:
@@ -1956,6 +2090,11 @@ MonoBehaviour:
   systemPrompt: "E\u0219ti un tutor prietenos care explic\u0103 obiecte 3D vizualizate
     \xEEn AR. R\u0103spunzi concis, maxim 2-3 propozi\u021Bii, f\u0103r\u0103 jargon
     excesiv. R\u0103spunde \xEEn aceea\u0219i limb\u0103 ca \xEEntrebarea."
+  whisperModel: whisper-1
+  whisperLanguage: ro
+  ttsModel: tts-1
+  ttsVoice: nova
+  ttsSpeed: 1
 --- !u!4 &1613128073
 Transform:
   m_ObjectHideFlags: 0
@@ -2026,6 +2165,57 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1818702039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1818702041}
+  - component: {fileID: 1818702040}
+  m_Layer: 0
+  m_Name: GLBLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1818702040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818702039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d4faada9607484da222adfc2c1b680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GLBLoader
+  arCamera: {fileID: 0}
+  arPlacementManager: {fileID: 9082691}
+  targetSize: 0.5
+  spawnDistance: 1.5
+  urpLitTemplate: {fileID: 2100000, guid: 50066a1724c1a414695a6a0b8354db63, type: 2}
+  maxTextureSize: 1024
+  gazeLayerName: GazeInteractable
+--- !u!4 &1818702041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818702039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.06492, y: -0, z: 0.17275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2259,6 +2449,7 @@ GameObject:
   - component: {fileID: 1936047801}
   - component: {fileID: 1936047800}
   - component: {fileID: 1936047799}
+  - component: {fileID: 1936047804}
   m_Layer: 0
   m_Name: HoloKit Default UI Canvas
   m_TagString: Untagged
@@ -2279,7 +2470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: HoloKit::HoloKit.UI.HoloKitDefaultUICanvas
   RenderModeButtonText: {fileID: 1532483770}
-  RecordButtonText: {fileID: 0}
+  RecordButtonText: {fileID: 299273505}
 --- !u!114 &1936047800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2364,6 +2555,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1936047804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936047798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1261657f30664a00aaa688cd2d75fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VideoRecorderBootstrap
+  recordButtonText: {fileID: 299273505}
+  textStart: Start Recording
+  textStop: Stop Recording
 --- !u!1 &1940474511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,9 +2836,9 @@ MonoBehaviour:
   onGazeClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1052228207}
-        m_TargetAssemblyTypeName: AskAIController, Assembly-CSharp
-        m_MethodName: AskAboutCurrentSelection
+      - m_Target: {fileID: 1052228209}
+        m_TargetAssemblyTypeName: VoiceAIController, Assembly-CSharp
+        m_MethodName: StartStopRecording
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2793,3 +2999,6 @@ SceneRoots:
   - {fileID: 1052228208}
   - {fileID: 1613128073}
   - {fileID: 1979651501}
+  - {fileID: 1818702041}
+  - {fileID: 178448713}
+  - {fileID: 1764487}

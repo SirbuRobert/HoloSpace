@@ -53,7 +53,7 @@ public class MRPanelUI : MonoBehaviour
 
     private void HandleSelectionChanged(SelectablePart part)
     {
-        if (alwaysVisibleForDebug) return; // ignoră selecția, panoul rămâne vizibil
+        if (alwaysVisibleForDebug) return; // ignora selectia, panoul ramane vizibil
 
         followTarget = part;
 
@@ -71,9 +71,9 @@ public class MRPanelUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Suprascrie textul descriere afișat pe panou. Folosit de AskAIController
-    /// pentru a arăta răspunsul AI. La următoarea schimbare de selecție,
-    /// textul revine automat la Description-ul părții (vezi HandleSelectionChanged).
+    /// Suprascrie textul descriere afisat pe panou. Folosit de AskAIController
+    /// ca sa arate raspunsul AI. La urmatoarea schimbare de selectie textul
+    /// revine automat la Description-ul partii (vezi HandleSelectionChanged).
     /// </summary>
     public void ShowDescription(string text)
     {
@@ -85,7 +85,7 @@ public class MRPanelUI : MonoBehaviour
     {
         if (alwaysVisibleForDebug)
         {
-            // ține panoul ancorat la 1m în fața camerei, billboard
+            // tine panoul ancorat la 1m in fata camerei, billboard
             if (arCamera == null) return;
             transform.position = arCamera.transform.position + arCamera.transform.forward * debugDistanceFromCamera;
             transform.rotation = Quaternion.LookRotation(transform.position - arCamera.transform.position, Vector3.up);

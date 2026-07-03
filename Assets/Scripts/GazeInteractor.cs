@@ -1,3 +1,4 @@
+using HoloKit;
 using UnityEngine;
 
 public class GazeInteractor : MonoBehaviour
@@ -5,18 +6,48 @@ public class GazeInteractor : MonoBehaviour
     [Header("References")]
     [SerializeField] private Camera arCamera;
 
+    [Tooltip("Reticul-ul de gaze. Dacă e null, se creează automat un GameObject cu GazeReticle.")]
+    [SerializeField] private GazeReticle reticle;
+
     [Header("Gaze Settings")]
     [SerializeField] private float gazeDistance = 10f;
     [SerializeField] private float gazeCompleteTime = 1.5f;
     [SerializeField] private LayerMask interactableLayers;
 
+    private HoloKitCameraManager holoKitCamera;
+    private Transform centerEyePose;
+
     private IGazeTarget currentTarget;
     private GameObject currentObject;
     private float gazeTimer;
 
+    private void Start()
+    {
+        holoKitCamera = FindFirstObjectByType<HoloKitCameraManager>();
+        if (holoKitCamera != null)
+            centerEyePose = holoKitCamera.CenterEyePose;
+        else
+            Debug.LogWarning("[GazeInteractor] HoloKitCameraManager negăsit — fallback la arCamera.");
+
+        // Cream reticulul automat daca nu e setat in Inspector
+        if (reticle == null)
+        {
+            var go = new GameObject("GazeReticle");
+            reticle = go.AddComponent<GazeReticle>();
+            Debug.Log("[GazeInteractor] GazeReticle creat automat.");
+        }
+    }
+
     private void Update()
     {
-        Ray ray = new Ray(arCamera.transform.position, arCamera.transform.forward);
+        // Mono: ray din camera telefonului (comportament original)
+        // Stereo: ray din CenterEyePose, mijlocul ochilor, compensat pentru decalajul HoloKit
+        bool isStereo = holoKitCamera != null
+                        && holoKitCamera.ScreenRenderMode == ScreenRenderMode.Stereo
+                        && centerEyePose != null;
+
+        Transform pose = isStereo ? centerEyePose : arCamera.transform;
+        Ray ray = new Ray(pose.position, pose.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, gazeDistance, interactableLayers))
         {
@@ -25,7 +56,7 @@ public class GazeInteractor : MonoBehaviour
 
             if (target != null)
             {
-                HandleTarget(target, hitObject);
+                HandleTarget(target, hitObject, hit.point, pose.position);
                 return;
             }
         }
@@ -33,7 +64,8 @@ public class GazeInteractor : MonoBehaviour
         ClearTarget();
     }
 
-    private void HandleTarget(IGazeTarget target, GameObject hitObject)
+    private void HandleTarget(IGazeTarget target, GameObject hitObject,
+                               Vector3 hitPoint, Vector3 eyePosition)
     {
         if (currentObject != hitObject)
         {
@@ -51,6 +83,9 @@ public class GazeInteractor : MonoBehaviour
         float progress = Mathf.Clamp01(gazeTimer / gazeCompleteTime);
         currentTarget.OnGazeStay(progress);
 
+        // Actualizam reticulul cu pozitia si progresul curent
+        reticle?.ShowAt(hitPoint, eyePosition, progress);
+
         if (gazeTimer >= gazeCompleteTime)
         {
             currentTarget.OnGazeComplete();
@@ -61,9 +96,9 @@ public class GazeInteractor : MonoBehaviour
     private void ClearTarget()
     {
         if (currentTarget != null)
-        {
             currentTarget.OnGazeExit();
-        }
+
+        reticle?.Hide();
 
         currentTarget = null;
         currentObject = null;

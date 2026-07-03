@@ -22,8 +22,11 @@ public class ARPlacementManager : MonoBehaviour
     private bool canPlace = false;
     private bool hasPlacedObject = false;
 
-    private Pose currentPlacementPose;
-    private GameObject placedObject;
+    private Pose        currentPlacementPose;
+    private GameObject  placedObject;
+
+    // Obiect deja creat (GLB loaded) care va fi plasat pe suprafata in loc de prefab
+    private GameObject  pendingExternalObject;
 
     private void Start()
     {
@@ -87,13 +90,73 @@ public class ARPlacementManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Distruge obiectul plasat curent (solar system) si intra in placement mode
+    /// pentru un obiect deja creat la runtime (GLB importat).
+    /// Acelasi flow ca plasarea initiala: utilizatorul dwell-gazeaza pe o suprafata.
+    /// </summary>
+    public void ResetForObject(GameObject externalObject)
+    {
+        // Distruge ce e plasat acum (solar system sau alt model)
+        if (placedObject != null)
+        {
+            Destroy(placedObject);
+            placedObject = null;
+            PlacedObject = null;
+        }
+
+        // Distruge un model pending anterior (daca userul incarca al 2-lea inainte sa plaseze primul)
+        if (pendingExternalObject != null)
+        {
+            Destroy(pendingExternalObject);
+            pendingExternalObject = null;
+        }
+
+        // Ascundem noul obiect pana cand utilizatorul alege pozitia
+        externalObject.SetActive(false);
+        pendingExternalObject = externalObject;
+
+        // Reactivam plane detection
+        if (planeManager != null)
+        {
+            planeManager.enabled = true;
+            foreach (var plane in planeManager.trackables)
+                plane.gameObject.SetActive(true);
+        }
+
+        // Reset state: Update() reia placement flow-ul
+        hasPlacedObject = false;
+        gazeTimer       = 0f;
+        canPlace        = false;
+
+        if (placementReticle != null)
+            placementReticle.SetActive(false);
+
+        Debug.Log($"[ARPlacementManager] Reset pentru '{externalObject.name}' — privește o suprafață.");
+    }
+
     private void PlaceObject()
     {
-        placedObject = Instantiate(
-            objectToPlacePrefab,
-            currentPlacementPose.position,
-            currentPlacementPose.rotation
-        );
+        if (pendingExternalObject != null)
+        {
+            // Plasam obiectul extern (GLB) pe suprafata aleasa
+            pendingExternalObject.SetActive(true);
+            pendingExternalObject.transform.SetPositionAndRotation(
+                currentPlacementPose.position,
+                currentPlacementPose.rotation
+            );
+            placedObject          = pendingExternalObject;
+            pendingExternalObject = null;
+        }
+        else
+        {
+            // Comportament original: instantiem prefab-ul (solar system)
+            placedObject = Instantiate(
+                objectToPlacePrefab,
+                currentPlacementPose.position,
+                currentPlacementPose.rotation
+            );
+        }
 
         PlacedObject = placedObject;
 
